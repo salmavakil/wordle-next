@@ -10,4 +10,8 @@ input {
     color: transparent;
     text-shadow: 0 0 0 black;
   }
+  .snackbar{
+    left:45%;
+    max-width: 250px;
+  }
 

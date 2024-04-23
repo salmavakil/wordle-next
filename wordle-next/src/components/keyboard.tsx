@@ -17,18 +17,18 @@ export default function Keyboard({handleKeyPress}:{handleKeyPress:Function}){
     <div className="keyboard-cont">
         <div className="first-row">
             {
-                row1.map((chr)=>(<button key={chr} className="keyboard-button bg-stone-50 border-solid border-2 border-grey-600" value={chr} onClick={(e)=>{e.preventDefault();handleClick(e)}}>{chr}</button>))
+                row1.map((chr)=>(<button key={chr} className="keyboard-button bg-stone-50 border-solid border-2 border-grey-600" value={chr} onMouseDown={e=>e.preventDefault()} onClick={(e)=>{handleClick(e)}}>{chr}</button>))
             }
             
         </div>
         <div className="second-row">
         {
-                row2.map((chr)=>(<button key={chr} className="keyboard-button bg-stone-50 border-solid border-2 border-grey-600" value={chr} onClick={(e)=>{e.preventDefault();handleClick(e)}}>{chr}</button>))
+                row2.map((chr)=>(<button key={chr} className="keyboard-button bg-stone-50 border-solid border-2 border-grey-600" value={chr} onMouseDown={e=>e.preventDefault()} onClick={(e)=>{handleClick(e)}}>{chr}</button>))
             }
         </div>
         <div className="third-row">
         {
-                row3.map((chr)=>(<button key={chr} className="keyboard-button bg-stone-50 border-solid border-2 border-grey-600" value={chr} onClick={(e)=>{e.preventDefault();handleClick(e)}}>{chr}</button>))
+                row3.map((chr)=>(<button key={chr} className="keyboard-button bg-stone-50 border-solid border-2 border-grey-600" value={chr} onMouseDown={e=>e.preventDefault()} onClick={(e)=>{handleClick(e)}}>{chr}</button>))
             }
         </div>
     </div>

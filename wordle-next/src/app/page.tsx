@@ -146,7 +146,7 @@ function Grid() {
     <>
     <div className='flex'>
       {message&&(
-        <div className='fixed border-solid border-2 border-black-600 rounded bg-slate-800 text-white p-3'>
+        <div className='fixed border-solid border-2 border-black-600 rounded bg-slate-800 text-white p-3 snackbar'>
       <Snackbar message={message}/>
       </div>
       )}
