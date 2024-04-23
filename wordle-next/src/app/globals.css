@@ -1,0 +1,13 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* input:focus, input:focus{
+    outline: none;
+    cursor:none;
+} */
+input {
+    color: transparent;
+    text-shadow: 0 0 0 black;
+  }
+
