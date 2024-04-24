@@ -1,8 +1,8 @@
 import { MouseEvent } from 'react';
 import './style.css';
-import { letterTypes } from '@/app/page';
+import { letterColors } from '@/app/page';
 
-export default function Keyboard({guess,keyboardColorCode,handleKeyPress}:{guess:number,keyboardColorCode:letterTypes,handleKeyPress:Function}){
+export default function Keyboard({guess,keyboardColorCode,handleKeyPress}:{guess:number,keyboardColorCode:letterColors,handleKeyPress:Function}){
     const row1=['q','w','e','r','t','y','u','i','o','p'];
     const row2=['a','s','d','f','g','h','j','k','l'];
     const row3 = ['Del','z','x','c','v','b','n','m','Enter'];

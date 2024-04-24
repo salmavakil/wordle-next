@@ -5,7 +5,7 @@ import {WORDS} from '../../public/words';
 import Snackbar from '../components/snackbar';
 import Keyboard from '../components/keyboard'
 
-export interface letterTypes {
+export interface letterColors {
   [key:string]:string
 }
 
@@ -16,7 +16,7 @@ function Grid() {
     const inputRefs = useRef<(HTMLInputElement)[]>([]);
     const [currentCell, setCurrentCell] = useState<number>(0);
     const [message, setMessage] = useState('');
-    const [keyboardColorCode, setkeyboardColorCode]= useState<letterTypes>({});
+    const [keyboardColorCode, setkeyboardColorCode]= useState<letterColors>({});
 
     useEffect(()=>{
         // const fetchWord = async () => {
@@ -160,6 +160,7 @@ function Grid() {
 
     // Todo : add replay --done
     // remove manual color change
+    // code refactoring for guess*5
     
 
   return (
