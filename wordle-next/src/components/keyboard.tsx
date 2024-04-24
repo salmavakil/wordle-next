@@ -1,6 +1,6 @@
 import { MouseEvent } from 'react';
 import './style.css';
-import { letterColors } from '@/app/page';
+import { letterColors } from '../app/page';
 
 export default function Keyboard({guess,keyboardColorCode,handleKeyPress}:{guess:number,keyboardColorCode:letterColors,handleKeyPress:Function}){
     const row1=['q','w','e','r','t','y','u','i','o','p'];
