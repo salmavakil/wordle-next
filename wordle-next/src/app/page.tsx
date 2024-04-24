@@ -155,6 +155,7 @@ function Grid() {
     const replay = () => {
         reset();
         setWord('');
+        fetchWord();
     }
 
 
