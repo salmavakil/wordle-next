@@ -24,3 +24,15 @@
     min-width: 60px;
     max-width: fit-content;
   }
+
+  .green{
+    background-color: green;
+  }
+
+  .yellow{
+    background-color: yellow;
+  }
+
+  .grey{
+    background-color: grey;
+  }

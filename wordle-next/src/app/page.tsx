@@ -5,14 +5,18 @@ import {WORDS} from '../../public/words';
 import Snackbar from '../components/snackbar';
 import Keyboard from '../components/keyboard'
 
+export interface letterTypes {
+  [key:string]:string
+}
+
 function Grid() {
     const [word, setWord] = useState('');
     const [inputWord, setInputWord] = useState<string[]>([]);
     const [guess, setGuess] = useState<number>(0);
     const inputRefs = useRef<(HTMLInputElement)[]>([]);
-    const [currentCell, setCurrentCell] = useState(0);
+    const [currentCell, setCurrentCell] = useState<number>(0);
     const [message, setMessage] = useState('');
-    const [guessesWords, setGuessedWords] = useState<string[]>([]);
+    const [keyboardColorCode, setkeyboardColorCode]= useState<letterTypes>({});
 
     useEffect(()=>{
         // const fetchWord = async () => {
@@ -21,13 +25,17 @@ function Grid() {
         //     setWord(word[0]);
         //     console.log(word);
         // }
-        // fetchWord();
-        const random = Math.floor(Math.random() * WORDS.length);
-        setWord(WORDS[random]);
+        fetchWord();
+        
     },[]);
 
+    const fetchWord = () => {
+        const random = Math.floor(Math.random() * WORDS.length);
+        setWord(WORDS[random]);
+    }
+
     useEffect(()=>{
-        inputRefs.current[currentCell].focus();
+        inputRefs.current[currentCell]?.focus();
     },[currentCell]);
 
 
@@ -57,6 +65,7 @@ function Grid() {
     }
 
 
+
     // handle key/character press(except enter and backspace)
     const enterCharacter = (e?:string) => {
         if(e) inputRefs.current[currentCell].value = e;
@@ -65,6 +74,7 @@ function Grid() {
         if(inputWord.length < 4) {setCurrentCell(currentCell+1);}
         setInputWord(temp);
     }
+
 
     //handle backspace press
     const backspace = (index:number) => {
@@ -98,31 +108,32 @@ function Grid() {
 
     //checks if the guess is correct
     const verifyWord = () => {
+        let arr = {...keyboardColorCode};
         if(word === inputWord.join('')) {
         inputWord.forEach((letter,index)=>{
            inputRefs.current[index+(guess*5)].style.backgroundColor = 'green';
+           arr[letter]='green';
         });
+        setCurrentCell(-1);
         setTimeout(()=>{setMessage("You Won!");
         setTimeout(()=>{setMessage('')},1000);},1000)
         }else {
         inputWord.forEach((letter,index)=>{
-            if(letter == word[index]) inputRefs.current[index+(guess*5)].style.backgroundColor = 'green';
-            else if(word.includes(letter)) inputRefs.current[index+(guess*5)].style.backgroundColor = 'yellow';
-            else inputRefs.current[index+((guess)*5)].style.backgroundColor = 'grey';})
+            if(letter == word[index]) {inputRefs.current[index+(guess*5)].style.backgroundColor = 'green'; arr[letter]='green';}
+            else if(word.includes(letter)) {inputRefs.current[index+(guess*5)].style.backgroundColor = 'yellow'; arr[letter]='yellow';}
+            else {inputRefs.current[index+((guess)*5)].style.backgroundColor = 'grey'; arr[letter]='grey';}})
             setInputWord([]);
-
+            setkeyboardColorCode(arr);
             if(guess < 5) 
-            setCurrentCell(currentCell+1);
-            else
-            {
-
-              setMessage(`You lost! The word you are looking for is ${word}`);
-              setTimeout(()=>{setMessage('')},1000); return;}
+                setCurrentCell(currentCell+1);
+            else{
+                setCurrentCell(-1);
+                setMessage(`You lost! The word you are looking for is ${word}`);
+                setTimeout(()=>{setMessage('')},5000); return;}
+        }
+        setGuess(guess+1);
         }
         
-        setGuess(guess+1);
-
-        }
 
 
     // disable all input fields in the grid
@@ -133,23 +144,33 @@ function Grid() {
         });
     }
 
+    const reset = () => {
+        setInputWord([]);
+        setGuess(0);
+        setCurrentCell(0);
+        setkeyboardColorCode({});
+        inputRefs.current.forEach((cell)=>{cell.value='';cell.style.backgroundColor='rgb(250 250 249)'});
+    }
 
-    // Todo : handle backspace on pressing twice , --done
-    // handle green tiles on correct guess, --done(partial)
-    // handle focus shifting on clicking outside, --done
-    // handle all attempts exhausted, alert messages(5 letters not complete), --done
-    // word does not exist error, --done
-    // design, 
+    const replay = () => {
+        reset();
+        setWord('');
+    }
+
+
+    // Todo : add replay --done
+    // remove manual color change
     
 
   return (
     <>
-    <div className='flex'>
+    <div className='flex flex-col'>
       {message&&(
         <div className='fixed border-solid border-2 border-black-600 rounded bg-slate-800 text-white p-3 snackbar'>
       <Snackbar message={message}/>
       </div>
       )}
+      {guess<5?(<button className='text-black-700 border border-black-700 font-medium text-sm px-3 py-2 text-center mx-auto my-2' onClick={() => reset()}>Reset</button>):(<button className='text-black-700 border border-black-700 font-medium text-sm px-3 py-2 text-center mx-auto my-2' onClick={() => replay()}>Replay</button>)}
     <div className='m-auto grid grid-cols-5 gap-2'>
         {gridCells.map((cell,index)=>
              (<input key = {cell.id} onBlur={e => e.target.focus()} disabled={currentCell===index?false:true} ref={(ele) => {
@@ -159,7 +180,7 @@ function Grid() {
         )}
     </div>
     </div>
-    <Keyboard handleKeyPress={handleKeyPress}/>
+    <Keyboard guess={guess} keyboardColorCode={keyboardColorCode} handleKeyPress={handleKeyPress} />
     </>
   )
 }
