@@ -120,8 +120,8 @@ function Grid() {
         }else {
         inputWord.forEach((letter,index)=>{
             if(letter == word[index]) {inputRefs.current[index+(guess*5)].style.backgroundColor = 'green'; arr[letter]='green';}
-            else if(word.includes(letter)) {inputRefs.current[index+(guess*5)].style.backgroundColor = 'yellow'; arr[letter]='yellow';}
-            else {inputRefs.current[index+((guess)*5)].style.backgroundColor = 'grey'; arr[letter]='grey';}})
+            else if(word.includes(letter)) {inputRefs.current[index+(guess*5)].style.backgroundColor = 'yellow'; if(arr[letter] != 'green') arr[letter]='yellow';}
+            else {inputRefs.current[index+((guess)*5)].style.backgroundColor = 'grey'; if(arr[letter] != 'green' && arr[letter] != 'yellow')  arr[letter]='grey';}})
             setInputWord([]);
             setkeyboardColorCode(arr);
             if(guess < 5) 
